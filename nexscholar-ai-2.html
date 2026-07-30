@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexScholar AI — Verified Scholarships Worldwide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#2563EB;
+  --blue-dark:#1D4ED8;
+  --emerald:#10B981;
+  --amber:#F59E0B;
+  --red:#DC2626;
+  --bg:#F8FAFC;
+  --bg-alt:#F1F5F9;
+  --surface:#FFFFFF;
+  --ink:#0F172A;
+  --ink-soft:#475569;
+  --ink-faint:#94A3B8;
+  --border:#E2E8F0;
+  --radius:14px;
+  --shadow-sm:0 1px 2px rgba(15,23,42,.06);
+  --shadow-md:0 4px 16px rgba(15,23,42,.08);
+  --shadow-lg:0 12px 32px rgba(15,23,42,.12);
+  color-scheme: light;
+}
+[data-theme="dark"]{
+  --bg:#0F172A;
+  --bg-alt:#152238;
+  --surface:#1E293B;
+  --ink:#F1F5F9;
+  --ink-soft:#94A3B8;
+  --ink-faint:#64748B;
+  --border:#2C3B52;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+  --shadow-md:0 4px 16px rgba(0,0,0,.35);
+  --shadow-lg:0 16px 40px rgba(0,0,0,.45);
+  color-scheme: dark;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  transition:background .25s ease, color .25s ease;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:.01ms !important; transition-duration:.01ms !important;}
+}
+h1,h2,h3,.display{font-family:'Fraunces',serif;}
+.mono{font-family:'JetBrains Mono',monospace;}
+a{color:inherit;}
+button{font-family:inherit; cursor:pointer;}
+img{max-width:100%; display:block;}
+.container{max-width:1200px; margin:0 auto; padding:0 24px;}
+:focus-visible{outline:2px solid var(--blue); outline-offset:2px; border-radius:4px;}
+
+/* ---------- NAV ---------- */
+nav{
+  position:sticky; top:0; z-index:100;
+  background:color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{display:flex; align-items:center; justify-content:space-between; height:68px; gap:24px;}
+.logo{display:flex; align-items:center; gap:9px; font-family:'Fraunces',serif; font-weight:600; font-size:1.25rem; white-space:nowrap;}
+.logo-mark{width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg, var(--blue), var(--emerald)); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:.85rem; font-family:'Inter',sans-serif; flex-shrink:0;}
+.nav-links{display:flex; gap:28px; align-items:center; font-size:.92rem; font-weight:500;}
+.nav-links a{color:var(--ink-soft); text-decoration:none; transition:color .15s;}
+.nav-links a:hover{color:var(--ink);}
+.nav-actions{display:flex; align-items:center; gap:12px;}
+.icon-btn{
+  width:38px; height:38px; border-radius:10px; border:1px solid var(--border); background:var(--surface);
+  display:flex; align-items:center; justify-content:center; color:var(--ink-soft); transition:all .15s;
+}
+.icon-btn:hover{border-color:var(--blue); color:var(--blue);}
+.btn{
+  padding:10px 18px; border-radius:10px; font-weight:600; font-size:.88rem; border:none; transition:all .15s;
+  display:inline-flex; align-items:center; gap:6px; white-space:nowrap;
+}
+.btn-primary{background:var(--blue); color:#fff;}
+.btn-primary:hover{background:var(--blue-dark); transform:translateY(-1px); box-shadow:var(--shadow-md);}
+.btn-ghost{background:transparent; color:var(--ink-soft); border:1px solid var(--border);}
+.btn-ghost:hover{border-color:var(--ink-soft); color:var(--ink);}
+.hide-mobile{display:flex;}
+.menu-toggle{display:none; background:none; border:none; color:var(--ink); font-size:1.4rem;}
+
+/* ---------- HERO ---------- */
+.hero{padding:72px 0 56px; position:relative; overflow:hidden;}
+.hero::before{
+  content:''; position:absolute; top:-120px; right:-120px; width:420px; height:420px; border-radius:50%;
+  background:radial-gradient(circle, color-mix(in srgb, var(--emerald) 18%, transparent), transparent 70%);
+  pointer-events:none;
+}
+.hero-inner{position:relative; z-index:1; max-width:760px;}
+.eyebrow{
+  display:inline-flex; align-items:center; gap:8px; font-size:.78rem; font-weight:600; letter-spacing:.04em;
+  color:var(--emerald); background:color-mix(in srgb, var(--emerald) 12%, transparent); padding:6px 12px; border-radius:100px; margin-bottom:20px;
+}
+.eyebrow-dot{width:6px; height:6px; border-radius:50%; background:var(--emerald); animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.hero h1{font-size:clamp(2.1rem, 4.4vw, 3.4rem); font-weight:600; line-height:1.08; letter-spacing:-.01em; margin-bottom:18px;}
+.hero h1 .accent{color:var(--blue); font-style:italic; font-weight:500;}
+.hero p{font-size:1.08rem; color:var(--ink-soft); max-width:520px; margin-bottom:36px; line-height:1.6;}
+
+.search-shell{
+  background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:8px;
+  box-shadow:var(--shadow-lg); display:flex; gap:8px; align-items:center; max-width:640px;
+}
+.search-shell input{
+  flex:1; border:none; background:transparent; font-size:1rem; padding:12px 14px; color:var(--ink); font-family:inherit;
+}
+.search-shell input:focus{outline:none;}
+.search-shell input::placeholder{color:var(--ink-faint);}
+.search-shell .btn-primary{padding:12px 22px;}
+
+.quick-filters{display:flex; flex-wrap:wrap; gap:9px; margin-top:20px;}
+.chip{
+  font-size:.82rem; font-weight:500; padding:7px 14px; border-radius:100px; border:1px solid var(--border);
+  background:var(--surface); color:var(--ink-soft); transition:all .15s;
+}
+.chip:hover{border-color:var(--blue); color:var(--blue);}
+.chip.active{background:var(--blue); border-color:var(--blue); color:#fff;}
+
+/* ---------- SECTIONS ---------- */
+section{padding:52px 0;}
+.section-head{display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:28px; gap:16px; flex-wrap:wrap;}
+.section-label{font-size:.76rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--blue); margin-bottom:6px; font-family:'JetBrains Mono',monospace;}
+.section-head h2{font-size:1.7rem; font-weight:600;}
+.section-head .btn-ghost{flex-shrink:0;}
+
+.grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;}
+.grid-2{grid-template-columns:repeat(2, 1fr);}
+
+/* ---------- OPPORTUNITY CARD (signature element) ---------- */
+.card{
+  position:relative; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  padding:22px; box-shadow:var(--shadow-sm); transition:transform .18s, box-shadow .18s; cursor:pointer;
+  display:flex; flex-direction:column; gap:12px; overflow:hidden;
+}
+.card:hover{transform:translateY(-3px); box-shadow:var(--shadow-md);}
+
+.stamp{
+  position:absolute; top:16px; right:16px; font-family:'JetBrains Mono',monospace; font-size:.66rem; font-weight:600;
+  letter-spacing:.03em; padding:5px 9px; border-radius:6px; border:1.5px solid; text-transform:uppercase;
+  transform:rotate(3deg); display:flex; align-items:center; gap:5px;
+}
+.stamp::before{content:''; width:6px; height:6px; border-radius:50%; background:currentColor;}
+.stamp.verified{color:var(--emerald); border-color:var(--emerald); background:color-mix(in srgb, var(--emerald) 10%, transparent);}
+.stamp.pending{color:var(--ink-soft); border-color:var(--ink-faint); background:color-mix(in srgb, var(--ink-faint) 10%, transparent);}
+.stamp.expired{color:var(--red); border-color:var(--red); background:color-mix(in srgb, var(--red) 8%, transparent); transform:rotate(-2deg);}
+.stamp.deadline{color:var(--amber); border-color:var(--amber); background:color-mix(in srgb, var(--amber) 12%, transparent);}
+
+.card-provider{font-size:.74rem; color:var(--ink-faint); font-weight:600; text-transform:uppercase; letter-spacing:.03em; padding-right:90px;}
+.card-title{font-family:'Fraunces',serif; font-size:1.14rem; font-weight:600; line-height:1.3; padding-right:20px;}
+.card-meta{display:flex; flex-wrap:wrap; gap:7px; margin-top:2px;}
+.tag{font-size:.72rem; padding:4px 9px; border-radius:6px; background:var(--bg-alt); color:var(--ink-soft); font-weight:500;}
+.card-foot{display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:12px; border-top:1px solid var(--border);}
+.deadline-label{font-size:.78rem; color:var(--ink-soft);}
+.deadline-value{font-family:'JetBrains Mono',monospace; font-size:.82rem; font-weight:600;}
+.save-btn{background:none; border:none; color:var(--ink-faint); font-size:1.1rem; transition:color .15s;}
+.save-btn:hover, .save-btn.saved{color:var(--amber);}
+
+/* ---------- CATEGORIES ---------- */
+.cat-grid{display:grid; grid-template-columns:repeat(6,1fr); gap:14px;}
+.cat-card{
+  background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px 14px; text-align:center;
+  transition:all .15s;
+}
+.cat-card:hover{border-color:var(--blue); transform:translateY(-2px); box-shadow:var(--shadow-sm);}
+.cat-icon{font-size:1.5rem; margin-bottom:8px;}
+.cat-name{font-size:.82rem; font-weight:600;}
+.cat-count{font-size:.7rem; color:var(--ink-faint); font-family:'JetBrains Mono',monospace; margin-top:2px;}
+
+/* ---------- NEWS ---------- */
+.news-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow-sm);}
+.news-tag{font-size:.7rem; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; display:block;}
+.news-card h3{font-size:1rem; font-weight:600; margin-bottom:8px; line-height:1.35;}
+.news-card p{font-size:.86rem; color:var(--ink-soft); line-height:1.5;}
+.news-date{font-size:.74rem; color:var(--ink-faint); margin-top:12px; font-family:'JetBrains Mono',monospace;}
+
+/* ---------- TESTIMONIALS ---------- */
+.testimonial{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px; box-shadow:var(--shadow-sm);}
+.testimonial p{font-family:'Fraunces',serif; font-size:1.02rem; font-style:italic; line-height:1.55; margin-bottom:16px; color:var(--ink);}
+.testimonial-who{display:flex; align-items:center; gap:10px;}
+.avatar{width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,var(--blue),var(--emerald)); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:600; font-size:.85rem;}
+.who-name{font-size:.86rem; font-weight:600;}
+.who-detail{font-size:.76rem; color:var(--ink-faint);}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--bg-alt); border-top:1px solid var(--border); padding:48px 0 24px; margin-top:40px;}
+.footer-grid{display:grid; grid-template-columns:2fr 1fr 1fr; gap:32px; margin-bottom:32px;}
+.footer-col h4{font-size:.82rem; margin-bottom:14px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.05em; font-weight:700;}
+.footer-col a{display:block; font-size:.88rem; color:var(--ink-soft); text-decoration:none; margin-bottom:10px;}
+.footer-col a:hover{color:var(--blue);}
+.footer-bottom{border-top:1px solid var(--border); padding-top:20px; display:flex; justify-content:space-between; font-size:.8rem; color:var(--ink-faint); flex-wrap:wrap; gap:8px;}
+
+/* ---------- MODAL (opportunity detail) ---------- */
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(15,23,42,.55); backdrop-filter:blur(3px); z-index:200;
+  display:none; align-items:flex-start; justify-content:center; padding:40px 20px; overflow-y:auto;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:var(--surface); border-radius:18px; max-width:680px; width:100%; padding:0; box-shadow:var(--shadow-lg);
+  animation:modalIn .22s ease;
+}
+@keyframes modalIn{from{opacity:0; transform:translateY(16px) scale(.98);} to{opacity:1; transform:translateY(0) scale(1);}}
+.modal-head{padding:26px 26px 0; position:relative;}
+.modal-close{position:absolute; top:20px; right:20px; width:34px; height:34px; border-radius:9px; border:1px solid var(--border); background:var(--surface); color:var(--ink-soft); font-size:1.1rem; display:flex; align-items:center; justify-content:center;}
+.modal-close:hover{border-color:var(--red); color:var(--red);}
+.modal-body{padding:20px 26px 26px;}
+.modal-body h3{font-family:'Fraunces',serif; font-size:.95rem; margin:20px 0 8px; color:var(--ink);}
+.modal-body h3:first-child{margin-top:0;}
+.modal-body p, .modal-body li{font-size:.92rem; color:var(--ink-soft); line-height:1.6;}
+.modal-body ul{padding-left:20px; margin-top:4px;}
+.ai-summary-box{
+  background:color-mix(in srgb, var(--blue) 6%, transparent); border:1px solid color-mix(in srgb, var(--blue) 25%, transparent);
+  border-radius:10px; padding:16px; margin:16px 0;
+}
+.ai-summary-box .ai-label{font-size:.72rem; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:.04em; margin-bottom:6px; display:flex; align-items:center; gap:6px;}
+.modal-actions{display:flex; gap:10px; margin-top:22px; flex-wrap:wrap;}
+.detail-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0;}
+.detail-item{background:var(--bg-alt); border-radius:8px; padding:10px 12px;}
+.detail-item .dl{font-size:.7rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.03em; margin-bottom:3px;}
+.detail-item .dv{font-size:.86rem; font-weight:600;}
+
+/* ---------- TOAST ---------- */
+.toast{
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(100px); background:var(--ink); color:var(--bg);
+  padding:12px 20px; border-radius:10px; font-size:.86rem; font-weight:500; z-index:300; transition:transform .25s ease; box-shadow:var(--shadow-lg);
+}
+[data-theme="dark"] .toast{background:var(--surface); color:var(--ink); border:1px solid var(--border);}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 980px){
+  .grid, .grid-2{grid-template-columns:repeat(2,1fr);}
+  .cat-grid{grid-template-columns:repeat(3,1fr);}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+}
+@media (max-width: 720px){
+  .hide-mobile{display:none;}
+  .menu-toggle{display:flex; align-items:center;}
+  .grid, .grid-2{grid-template-columns:1fr;}
+  .cat-grid{grid-template-columns:repeat(2,1fr);}
+  .footer-grid{grid-template-columns:1fr;}
+  .hero{padding:48px 0 40px;}
+  .search-shell{flex-wrap:wrap;}
+  .search-shell .btn-primary{width:100%; justify-content:center;}
+  .detail-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<nav>
+  <div class="container nav-inner">
+    <div class="logo">
+      <div class="logo-mark">NS</div>
+      NexScholar <span style="color:var(--emerald); font-style:italic;">AI</span>
+    </div>
+    <div class="nav-links hide-mobile">
+      <a href="#" onclick="showPage('home'); return false;" id="navHome">Home</a>
+      <a href="#" onclick="showPage('scholarships'); return false;" id="navScholarships">Scholarships</a>
+      <a href="#" onclick="showPage('about'); return false;" id="navAbout">About</a>
+      <a href="#" onclick="openModal('admin'); return false;">Admin</a>
+    </div>
+    <div class="nav-actions">
+      <button class="icon-btn hide-mobile" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle dark mode">🌙</button>
+      <div id="authArea" class="hide-mobile" style="display:flex; gap:12px; align-items:center;">
+        <button class="btn btn-ghost" id="signInBtn" onclick="openAuthModal('signin')">Sign in</button>
+        <button class="btn btn-primary" id="getStartedBtn" onclick="openAuthModal('signup')">Get started</button>
+      </div>
+      <button class="menu-toggle" aria-label="Menu" onclick="showToast('Mobile menu — demo only')">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<div id="page-home" class="page">
+<header class="hero">
+  <div class="container hero-inner">
+    <div class="eyebrow"><span class="eyebrow-dot"></span> <span id="heroStatCount">Loading opportunities…</span></div>
+    <h1>Find <span class="accent">verified</span> scholarships worldwide.</h1>
+    <p>Every listing on NexScholar links back to its official source. No invented programmes, no guesswork — search by keyword and find opportunities you can actually trust and apply to.</p>
+    <div class="search-shell">
+      <span style="padding-left:10px; color:var(--ink-faint);">🔍</span>
+      <input id="heroSearch" type="text" placeholder="Search by keyword — e.g. Canada, fully funded, IELTS, computer science" onkeydown="if(event.key==='Enter'){ runHeroSearch(); }">
+      <button class="btn btn-primary" onclick="runHeroSearch()">Search</button>
+    </div>
+    <div class="quick-filters">
+      <button class="chip active" onclick="filterChip(this,'all')">All</button>
+      <button class="chip" onclick="filterChip(this,'funded')">Fully Funded</button>
+      <button class="chip" onclick="filterChip(this,'open')">Currently Open</button>
+      <button class="chip" onclick="filterChip(this,'undergrad')">Undergraduate</button>
+      <button class="chip" onclick="filterChip(this,'masters')">Master's</button>
+      <button class="chip" onclick="filterChip(this,'noielts')">No IELTS Required</button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= CATEGORIES ================= -->
+<section id="categories">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-label">Browse</div>
+        <h2>Categories</h2>
+      </div>
+    </div>
+    <div class="cat-grid" id="catGrid"></div>
+  </div>
+</section>
+
+<!-- ================= FEATURED / OPPORTUNITIES ================= -->
+<section id="opportunities" style="background:var(--bg-alt);">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-label">Handpicked</div>
+        <h2>Featured Scholarships</h2>
+      </div>
+      <button class="btn btn-ghost">View all →</button>
+    </div>
+    <div class="grid" id="featuredGrid"></div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-label">Time-sensitive</div>
+        <h2>Upcoming Deadlines</h2>
+      </div>
+      <button class="btn btn-ghost">View all →</button>
+    </div>
+    <div class="grid" id="deadlineGrid"></div>
+  </div>
+</section>
+
+<section style="background:var(--bg-alt);">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-label">Right now</div>
+        <h2>Trending Opportunities</h2>
+      </div>
+      <button class="btn btn-ghost">View all →</button>
+    </div>
+    <div class="grid" id="trendingGrid"></div>
+  </div>
+</section>
+
+<!-- ================= NEWS ================= -->
+<section id="news">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-label">Stay informed</div>
+        <h2>Latest Educational News</h2>
+      </div>
+    </div>
+    <div class="grid" id="newsGrid"></div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section style="background:var(--bg-alt);">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-label">From students</div>
+        <h2>Testimonials</h2>
+      </div>
+    </div>
+    <div class="grid grid-3" id="testGrid" style="grid-template-columns:repeat(3,1fr);"></div>
+  </div>
+</section>
+
+</div><!-- /page-home -->
+
+<!-- ================= SCHOLARSHIPS PAGE ================= -->
+<div id="page-scholarships" class="page" style="display:none;">
+  <div class="container" style="padding-top:36px;">
+    <div class="section-head" style="align-items:flex-start;">
+      <div>
+        <div class="section-label">Browse all</div>
+        <h2>Scholarships</h2>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:28px; align-items:flex-start; flex-wrap:wrap;">
+      <!-- Filters sidebar -->
+      <aside style="flex:0 0 240px; min-width:220px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow-sm);">
+        <div style="margin-bottom:20px;">
+          <label style="font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-faint); display:block; margin-bottom:8px;">Keyword</label>
+          <input id="spSearch" type="text" placeholder="Scholarship, university..." oninput="applyScholarshipFilters()" style="width:100%; padding:9px 11px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--ink); font-family:inherit; font-size:.86rem;">
+        </div>
+        <div style="margin-bottom:20px;">
+          <label style="font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-faint); display:block; margin-bottom:8px;">Country</label>
+          <select id="spCountry" onchange="applyScholarshipFilters()" style="width:100%; padding:9px 11px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--ink); font-family:inherit; font-size:.86rem;">
+            <option value="">All countries</option>
+          </select>
+        </div>
+        <div style="margin-bottom:20px;">
+          <label style="font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-faint); display:block; margin-bottom:8px;">Degree Level</label>
+          <select id="spDegree" onchange="applyScholarshipFilters()" style="width:100%; padding:9px 11px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--ink); font-family:inherit; font-size:.86rem;">
+            <option value="">All degree levels</option>
+            <option value="undergrad">Undergraduate</option>
+            <option value="master">Master's</option>
+            <option value="phd">PhD</option>
+          </select>
+        </div>
+        <div style="margin-bottom:8px;">
+          <label style="font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-faint); display:block; margin-bottom:8px;">Funding</label>
+          <select id="spFunding" onchange="applyScholarshipFilters()" style="width:100%; padding:9px 11px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--ink); font-family:inherit; font-size:.86rem;">
+            <option value="">All funding types</option>
+            <option value="Fully Funded">Fully Funded</option>
+            <option value="Partially Funded">Partially Funded</option>
+          </select>
+        </div>
+        <button class="btn btn-ghost" style="width:100%; justify-content:center; margin-top:12px;" onclick="clearScholarshipFilters()">Clear filters</button>
+      </aside>
+
+      <!-- Results -->
+      <div style="flex:1; min-width:280px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <span id="spResultCount" style="font-size:.86rem; color:var(--ink-soft);"></span>
+        </div>
+        <div class="grid" id="spGrid"></div>
+        <div style="display:flex; justify-content:center; gap:8px; margin-top:28px;" id="spPagination"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= ABOUT PAGE ================= -->
+<div id="page-about" class="page" style="display:none;">
+  <div class="container" style="padding-top:36px; max-width:760px;">
+    <div class="section-label">About</div>
+    <h2 style="font-size:2rem; font-weight:600; margin-bottom:20px;">About NexScholar</h2>
+    <p style="color:var(--ink-soft); line-height:1.7; margin-bottom:16px;">NexScholar is a discovery platform for scholarships, admissions, grants, and other educational opportunities from around the world. Every listing links back to an official source, so you can move from browsing straight to applying with confidence.</p>
+    <p style="color:var(--ink-soft); line-height:1.7; margin-bottom:16px;">Scholarships published on our partner blog appear here automatically, organised by country, degree level, and funding type, alongside our own curated listings — searchable in one place instead of scattered across dozens of sites.</p>
+    <p style="color:var(--ink-soft); line-height:1.7; margin-bottom:16px;">Have a scholarship to suggest, or spotted something that looks off? Reach out — we're actively building this out and want it to stay accurate and useful.</p>
+    <h3 style="font-family:'Fraunces',serif; font-size:1.1rem; margin:28px 0 10px;">How it works</h3>
+    <ul style="color:var(--ink-soft); line-height:1.8; padding-left:20px;">
+      <li>Opportunities are published as posts on our content blog, tagged by country, degree, and funding type.</li>
+      <li>They sync into NexScholar automatically and become searchable, filterable listings.</li>
+      <li>Create a free account to bookmark opportunities and track ones you're applying to.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="logo" style="margin-bottom:12px;">
+          <div class="logo-mark">NS</div> NexScholar AI
+        </div>
+        <p style="font-size:.86rem; color:var(--ink-soft); max-width:280px; line-height:1.6;">Educational opportunities sourced from our Blogger content and curated manually — scholarships, admissions, grants and more.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="#" onclick="showPage('home'); return false;">Home</a>
+        <a href="#" onclick="showPage('scholarships'); return false;">Scholarships</a>
+        <a href="#" onclick="showPage('about'); return false;">About</a>
+      </div>
+      <div class="footer-col">
+        <h4>Account</h4>
+        <a href="#" onclick="openModal('admin'); return false;">Admin Dashboard</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NexScholar AI</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ================= DETAIL MODAL ================= -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this) closeModal()">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<!-- ================= AUTH MODAL ================= -->
+<div class="modal-overlay" id="authOverlay" onclick="if(event.target===this) closeAuthModal()">
+  <div class="modal" style="max-width:400px;">
+    <div class="modal-head">
+      <button class="modal-close" onclick="closeAuthModal()">✕</button>
+      <h2 class="display" id="authTitle" style="font-size:1.4rem; font-weight:600;">Sign in</h2>
+      <div class="card-provider" style="padding-right:0; margin-top:4px;" id="authSubtitle">Welcome back to NexScholar</div>
+    </div>
+    <div class="modal-body">
+      <div id="authError" style="display:none; background:color-mix(in srgb, var(--red) 10%, transparent); border:1px solid var(--red); color:var(--red); border-radius:8px; padding:10px 12px; font-size:.84rem; margin-bottom:14px;"></div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div>
+          <label style="font-size:.8rem; font-weight:600; display:block; margin-bottom:6px;">Email</label>
+          <input id="authEmail" type="email" placeholder="you@example.com" style="width:100%; padding:10px 12px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--ink); font-family:inherit; font-size:.9rem;">
+        </div>
+        <div>
+          <label style="font-size:.8rem; font-weight:600; display:block; margin-bottom:6px;">Password</label>
+          <input id="authPassword" type="password" placeholder="••••••••" style="width:100%; padding:10px 12px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--ink); font-family:inherit; font-size:.9rem;" onkeydown="if(event.key==='Enter') submitAuthForm()">
+        </div>
+        <button class="btn btn-primary" id="authSubmitBtn" style="justify-content:center; padding:11px;" onclick="submitAuthForm()">Sign in</button>
+        <div style="display:flex; align-items:center; gap:10px; color:var(--ink-faint); font-size:.78rem;">
+          <div style="flex:1; height:1px; background:var(--border);"></div> or <div style="flex:1; height:1px; background:var(--border);"></div>
+        </div>
+        <button class="btn btn-ghost" style="justify-content:center; padding:11px;" onclick="signInWithGoogle()">
+          <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.6-6 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34.5 6 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l6-6C34.5 6 29.6 4 24 4c-7.7 0-14.3 4.4-17.7 10.7z"/><path fill="#4CAF50" d="M24 44c5.5 0 10.4-1.9 14.2-5.1l-6.6-5.4C29.6 35.4 26.9 36 24 36c-5.3 0-9.7-3.4-11.3-8l-6.6 5.1C9.6 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.2-4.2 5.5l6.6 5.4C41.4 36 44 30.5 44 24c0-1.3-.1-2.7-.4-3.5z"/></svg>
+          Continue with Google
+        </button>
+        <p style="text-align:center; font-size:.82rem; color:var(--ink-soft); margin-top:4px;">
+          <span id="authSwitchPrompt">Don't have an account?</span>
+          <a href="#" onclick="switchAuthMode(); return false;" style="color:var(--blue); font-weight:600; text-decoration:none;" id="authSwitchLink">Sign up</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ BLOGGER INTEGRATION CONFIG ============ */
+// Blog URL and API key — both free to use (Blogger API v3 has no cost).
+// Restrict this key to the Blogger API + your domain in Google Cloud Console
+// once things are working, since it's visible in page source like any client-side key.
+const BLOGGER_BLOG_URL = "https://nexscholarme.blogspot.com/";
+const BLOGGER_API_KEY = "AIzaSyCFNyW6iv9ehOIhsmJ95SzQ1MsRMf42NTQ";
+let BLOGGER_BLOG_ID = null; // resolved on load via the API
+let currentPage = 'home';
+
+const opportunities = [];
+
+const news = [
+  {tag:"Visa Updates", title:"UK raises minimum maintenance funds for Student visa applicants", body:"From this autumn, applicants must show higher savings thresholds for London vs non-London institutions.", date:"Jul 26, 2026"},
+  {tag:"University Admissions", title:"Common App adds two new essay prompts for 2027 cycle", body:"The update focuses on adaptability and community contribution, alongside existing prompts.", date:"Jul 24, 2026"},
+  {tag:"Government Announcements", title:"Canada expands post-graduation work permit eligibility", body:"Select college diploma programmes regain PGWP eligibility after last year's restrictions.", date:"Jul 21, 2026"}
+];
+
+const testimonials = [
+  {name:"Amaka O.", detail:"Chevening Scholar, 2025 cohort", text:"I found Chevening through a search here before I even knew the programme existed. The verification badge gave me confidence to actually apply."},
+  {name:"Diego R.", detail:"DAAD EPOS recipient", text:"The deadline reminders meant I didn't miss the embassy-track cutoff, which is easy to do since it's earlier than people expect."},
+  {name:"Priya S.", detail:"Erasmus Mundus student", text:"Being able to ask in plain language and get only real, sourced results saved me from three different scam sites."}
+];
+
+const categories = [
+  {icon:"🎓", name:"Scholarships"},
+  {icon:"🏫", name:"Admissions"},
+  {icon:"💼", name:"Internships"},
+  {icon:"🏆", name:"Competitions"},
+  {icon:"🔬", name:"Research Grants"},
+  {icon:"🌍", name:"Fellowships"},
+  {icon:"🔄", name:"Exchange Programmes"},
+  {icon:"📚", name:"Free Online Courses"},
+  {icon:"✈️", name:"Study Abroad"},
+  {icon:"📝", name:"Exam Updates"},
+  {icon:"📰", name:"Educational News"},
+];
+
+/* ============ HELPERS ============ */
+const statusMeta = {
+  verified:{label:"Verified", cls:"verified"},
+  pending:{label:"Pending", cls:"pending"},
+  expired:{label:"Expired", cls:"expired"},
+  deadline:{label:"Deadline Soon", cls:"deadline"}
+};
+function daysUntil(dateStr){
+  const d = new Date(dateStr); const now = new Date("2026-07-29");
+  return Math.ceil((d-now)/(1000*60*60*24));
+}
+function fmtDate(dateStr){
+  return new Date(dateStr).toLocaleDateString('en-US',{month:'short', day:'numeric', year:'numeric'});
+}
+
+function cardHTML(o){
+  const meta = statusMeta[o.status];
+  const days = daysUntil(o.deadline);
+  const deadlineText = days < 0 ? "Closed" : days === 0 ? "Today" : `${days}d left`;
+  const imageHTML = o.image ? `<div style="margin:-22px -22px 4px; border-radius:14px 14px 0 0; overflow:hidden; aspect-ratio:16/9;"><img src="${o.image}" alt="" style="width:100%; height:100%; object-fit:cover;" loading="lazy"></div>` : '';
+  return `
+  <div class="card" onclick="openDetail('${o.id}')">
+    ${imageHTML}
+    <div class="stamp ${meta.cls}">${meta.label}</div>
+    <div class="card-provider">${o.provider}</div>
+    <div class="card-title">${o.title}</div>
+    <div class="card-meta">
+      <span class="tag">${o.country}</span>
+      <span class="tag">${o.degree}</span>
+      <span class="tag">${o.funding}</span>
+    </div>
+    <div class="card-foot">
+      <div>
+        <div class="deadline-label">Deadline</div>
+        <div class="deadline-value mono">${fmtDate(o.deadline)} · ${deadlineText}</div>
+      </div>
+      <button class="save-btn" onclick="event.stopPropagation(); toggleSave(this, '${o.id}')" aria-label="Save opportunity">☆</button>
+    </div>
+  </div>`;
+}
+
+function render(){
+  const heroStat = document.getElementById('heroStatCount');
+  if(heroStat){
+    heroStat.textContent = opportunities.length
+      ? `${opportunities.length} opportunit${opportunities.length===1?'y':'ies'} available`
+      : 'No opportunities loaded yet';
+  }
+
+  document.getElementById('catGrid').innerHTML = categories.map(c=>{
+    const count = opportunities.filter(o => o.category === c.name).length;
+    return `
+    <div class="cat-card" onclick="goToScholarshipsFiltered('${c.name.replace(/'/g,"\\'")}')">
+      <div class="cat-icon">${c.icon}</div>
+      <div class="cat-name">${c.name}</div>
+      <div class="cat-count">${count} listed</div>
+    </div>`;
+  }).join('');
+
+  const emptyMsg = `<p style="color:var(--ink-soft); grid-column:1/-1;">No opportunities loaded yet. Publish a post on Blogger or add one from the Admin dashboard.</p>`;
+
+  const featured = opportunities.slice(0,3);
+  document.getElementById('featuredGrid').innerHTML = featured.length ? featured.map(cardHTML).join('') : emptyMsg;
+
+  const byDeadline = [...opportunities].filter(o=>daysUntil(o.deadline)>=0).sort((a,b)=>daysUntil(a.deadline)-daysUntil(b.deadline)).slice(0,3);
+  document.getElementById('deadlineGrid').innerHTML = byDeadline.length ? byDeadline.map(cardHTML).join('') : emptyMsg;
+
+  const trending = opportunities.filter(o => o.status === 'verified' || o.status === 'deadline').slice(0,3);
+  const trendingFinal = trending.length ? trending : opportunities.slice(0,3);
+  document.getElementById('trendingGrid').innerHTML = trendingFinal.length ? trendingFinal.map(cardHTML).join('') : emptyMsg;
+
+  document.getElementById('newsGrid').innerHTML = news.map(n=>`
+    <div class="news-card">
+      <span class="news-tag">${n.tag}</span>
+      <h3>${n.title}</h3>
+      <p>${n.body}</p>
+      <div class="news-date">${n.date}</div>
+    </div>`).join('');
+
+  document.getElementById('testGrid').innerHTML = testimonials.map(t=>`
+    <div class="testimonial">
+      <p>"${t.text}"</p>
+      <div class="testimonial-who">
+        <div class="avatar">${t.name.charAt(0)}</div>
+        <div>
+          <div class="who-name">${t.name}</div>
+          <div class="who-detail">${t.detail}</div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  if(currentPage === 'scholarships') refreshScholarshipsPage();
+}
+render();
+showPage('home');
+
+/* ============ BLOGGER: fetch + parse posts as scholarships ============ */
+// Convention: labels like "country:Canada", "degree:Masters", "funding:Fully Funded",
+// "deadline:2026-12-01" carry structured fields. Any other label becomes a plain tag.
+// Post title = scholarship title. Post content (HTML stripped) = summary/description.
+function parseBloggerLabel(label){
+  const idx = label.indexOf(':');
+  if(idx === -1) return null;
+  return { key: label.slice(0, idx).trim().toLowerCase(), value: label.slice(idx+1).trim() };
+}
+
+function stripHtml(html){
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html || '';
+  return (tmp.textContent || tmp.innerText || '').trim();
+}
+
+function extractFirstImage(post){
+  if(post.images && post.images.length) return post.images[0].url;
+  const tmp = document.createElement('div');
+  tmp.innerHTML = post.content || '';
+  const img = tmp.querySelector('img');
+  return img ? img.getAttribute('src') : null;
+}
+
+function bloggerPostToOpportunity(post){
+  const fields = { country:'Not specified', degree:'Not specified', funding:'Not specified', deadline:null };
+  const plainTags = [];
+
+  (post.labels || []).forEach(label => {
+    const parsed = parseBloggerLabel(label);
+    if(parsed && fields.hasOwnProperty(parsed.key)){
+      fields[parsed.key] = parsed.value;
+    } else {
+      plainTags.push(label);
+    }
+  });
+
+  const summaryText = stripHtml(post.content).slice(0, 600);
+  const deadlineValid = fields.deadline && !isNaN(new Date(fields.deadline));
+  const imageUrl = extractFirstImage(post);
+
+  return {
+    id: `blogger-${post.id}`,
+    title: post.title,
+    provider: "NexScholar (via Blogger)",
+    country: fields.country,
+    degree: fields.degree,
+    funding: fields.funding,
+    category: plainTags[0] || "Scholarships",
+    status: deadlineValid ? (daysUntil(fields.deadline) < 0 ? "expired" : (daysUntil(fields.deadline) <= 14 ? "deadline" : "pending")) : "pending",
+    deadline: deadlineValid ? fields.deadline : "2099-12-31",
+    updated: post.updated ? post.updated.slice(0,10) : post.published.slice(0,10),
+    benefits: [],
+    eligibility: [],
+    documents: [],
+    process: "See full details below.",
+    website: post.url,
+    apply: post.url,
+    tips: "",
+    summary: summaryText || "No description provided.",
+    image: imageUrl,
+    fromBlogger: true,
+    bloggerUrl: post.url
+  };
+}
+
+async function fetchBloggerPosts(){
+  if(!BLOGGER_API_KEY || !BLOGGER_BLOG_URL){
+    console.info('Blogger integration not configured — skipping.');
+    return [];
+  }
+  try {
+    // Step 1: resolve blog ID from its URL (cached after first call)
+    if(!BLOGGER_BLOG_ID){
+      const idRes = await fetch(`https://www.googleapis.com/blogger/v3/blogs/byurl?url=${encodeURIComponent(BLOGGER_BLOG_URL)}&key=${BLOGGER_API_KEY}`);
+      if(!idRes.ok){
+        const errBody = await idRes.json().catch(()=>({}));
+        console.error('Blogger: failed to resolve blog ID', idRes.status, errBody);
+        showToast(`Blogger connection failed: ${errBody.error?.message || idRes.status}`);
+        return [];
+      }
+      const idData = await idRes.json();
+      BLOGGER_BLOG_ID = idData.id;
+    }
+
+    // Step 2: fetch posts (most recent first, includes pagination via nextPageToken if needed later)
+    const postsRes = await fetch(`https://www.googleapis.com/blogger/v3/blogs/${BLOGGER_BLOG_ID}/posts?key=${BLOGGER_API_KEY}&maxResults=50&fetchBodies=true`);
+    if(!postsRes.ok){
+      const errBody = await postsRes.json().catch(()=>({}));
+      console.error('Blogger: failed to fetch posts', postsRes.status, errBody);
+      showToast(`Blogger fetch failed: ${errBody.error?.message || postsRes.status}`);
+      return [];
+    }
+    const postsData = await postsRes.json();
+    const posts = postsData.items || [];
+    return posts.map(bloggerPostToOpportunity);
+  } catch(e){
+    console.error('Blogger fetch error:', e);
+    showToast('Blogger fetch failed — check console');
+    return [];
+  }
+}
+
+/* Once the Firebase module script loads, check for real Firestore data.
+   If the "scholarships" collection has documents, swap them in and re-render.
+   Blogger posts are then fetched live and merged in on every page load. */
+window.addEventListener('DOMContentLoaded', async () => {
+  // small delay to let the module script attach window.__nexscholarLoadOpportunities
+  setTimeout(async () => {
+    if (window.__nexscholarLoadOpportunities) {
+      const realData = await window.__nexscholarLoadOpportunities();
+      if (realData && realData.length) {
+        opportunities.length = 0;
+        opportunities.push(...realData);
+      }
+    }
+
+    const bloggerOpportunities = await fetchBloggerPosts();
+    if(bloggerOpportunities.length){
+      // de-dupe in case of re-fetch / re-render
+      const existingIds = new Set(opportunities.map(o=>o.id));
+      bloggerOpportunities.forEach(o => { if(!existingIds.has(o.id)) opportunities.push(o); });
+      showToast(`Loaded ${bloggerOpportunities.length} scholarship post(s) from Blogger`);
+    }
+
+    render();
+  }, 600);
+});
+
+/* ============ DETAIL MODAL ============ */
+function openDetail(id){
+  const o = opportunities.find(x=>String(x.id)===String(id));
+  if(!o) return;
+  const meta = statusMeta[o.status];
+  const imageHTML = o.image ? `<img src="${o.image}" alt="" style="width:100%; border-radius:12px; margin-bottom:16px; max-height:280px; object-fit:cover;">` : '';
+  const benefitsHTML = o.benefits && o.benefits.length ? `<h3>Benefits</h3><ul>${o.benefits.map(b=>`<li>${b}</li>`).join('')}</ul>` : '';
+  const eligibilityHTML = o.eligibility && o.eligibility.length ? `<h3>Eligibility</h3><ul>${o.eligibility.map(b=>`<li>${b}</li>`).join('')}</ul>` : '';
+  const documentsHTML = o.documents && o.documents.length ? `<h3>Required Documents</h3><ul>${o.documents.map(b=>`<li>${b}</li>`).join('')}</ul>` : '';
+  const tipsHTML = o.tips ? `<h3>Application Tips</h3><p>${o.tips}</p>` : '';
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-head">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="stamp ${meta.cls}" style="position:static; display:inline-flex; transform:none; margin-bottom:14px;">${meta.label}</div>
+      <div class="card-provider" style="padding-right:0;">${o.provider} · ${o.country}</div>
+      <h2 class="display" style="font-size:1.5rem; font-weight:600; margin-top:6px;">${o.title}</h2>
+    </div>
+    <div class="modal-body">
+      ${imageHTML}
+      <div class="ai-summary-box">
+        <div class="ai-label">Summary</div>
+        <p>${o.summary}</p>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-item"><div class="dl">Degree Level</div><div class="dv">${o.degree}</div></div>
+        <div class="detail-item"><div class="dl">Funding Type</div><div class="dv">${o.funding}</div></div>
+        <div class="detail-item"><div class="dl">Deadline</div><div class="dv mono">${fmtDate(o.deadline)}</div></div>
+        <div class="detail-item"><div class="dl">Last Updated</div><div class="dv mono">${fmtDate(o.updated)}</div></div>
+      </div>
+      ${benefitsHTML}
+      ${eligibilityHTML}
+      ${documentsHTML}
+      <h3>Application Process</h3>
+      <p>${o.process}</p>
+      ${tipsHTML}
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="window.open('${o.apply}','_blank')">Go to official application →</button>
+        <button class="btn btn-ghost" onclick="window.open('${o.website}','_blank')">Official website</button>
+        <button class="btn btn-ghost" onclick="toggleSave(this, '${o.id}'); showToast('Saved to bookmarks')">☆ Save</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function openModal(type){
+  if(type==='admin'){
+    const bloggerCount = opportunities.filter(o => o.fromBlogger).length;
+    const manualCount = opportunities.length - bloggerCount;
+    const expiredCount = opportunities.filter(o => o.status === 'expired').length;
+    const pendingCount = opportunities.filter(o => o.status === 'pending').length;
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-head">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <h2 class="display" style="font-size:1.4rem; font-weight:600;">Admin Dashboard</h2>
+        <div class="card-provider" style="padding-right:0; margin-top:4px;">Live counts from currently loaded data</div>
+      </div>
+      <div class="modal-body">
+        <div class="detail-grid">
+          <div class="detail-item"><div class="dl">Total Listings</div><div class="dv">${opportunities.length}</div></div>
+          <div class="detail-item"><div class="dl">From Blogger</div><div class="dv">${bloggerCount}</div></div>
+          <div class="detail-item"><div class="dl">Manually Added</div><div class="dv">${manualCount}</div></div>
+          <div class="detail-item"><div class="dl">Expired</div><div class="dv">${expiredCount}</div></div>
+        </div>
+        <h3>Actions</h3>
+        <div class="modal-actions">
+          <button class="btn btn-primary" onclick="closeModal(); openAddOpportunityForm();">Add opportunity manually</button>
+        </div>
+        <p style="font-size:.78rem; color:var(--ink-faint); margin-top:10px;">Scholarships mainly come from your Blogger blog (synced automatically) or manual entries added here, written to Firestore.</p>
+      </div>`;
+    document.getElementById('modalOverlay').classList.add('open');
+  }
+}
+
+function closeModal(){ document.getElementById('modalOverlay').classList.remove('open'); }
+
+/* ============ SAVE / THEME / TOAST ============ */
+async function toggleSave(btn, id){
+  const willBeSaved = !btn.classList.contains('saved');
+  btn.classList.toggle('saved');
+  btn.textContent = willBeSaved ? '★' : '☆';
+  showToast(willBeSaved ? 'Added to bookmarks' : 'Removed from bookmarks');
+  if (window.__nexscholarToggleBookmark) {
+    const ok = await window.__nexscholarToggleBookmark(id, willBeSaved);
+    if (ok === false) {
+      // not signed in — revert the visual state since it wasn't persisted
+      btn.classList.toggle('saved');
+      btn.textContent = btn.classList.contains('saved') ? '★' : '☆';
+    }
+  }
+}
+
+function toggleTheme(){
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('themeBtn').textContent = isDark ? '🌙' : '☀️';
+}
+
+let toastTimer;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 2600);
+}
+
+/* ============ KEYWORD SEARCH + FILTERS (real, no AI) ============ */
+let activeChipFilter = 'all';
+
+function matchesChipFilter(o, key){
+  switch(key){
+    case 'funded': return o.funding === 'Fully Funded';
+    case 'open': return daysUntil(o.deadline) >= 0;
+    case 'undergrad': return o.degree.toLowerCase().includes('undergrad');
+    case 'masters': return o.degree.toLowerCase().includes("master");
+    case 'noielts': return !o.documents.some(d => d.toLowerCase().includes('ielts'))
+                        && !o.eligibility.some(e => e.toLowerCase().includes('ielts'));
+    default: return true;
+  }
+}
+
+function matchesKeyword(o, term){
+  if(!term) return true;
+  const haystack = [
+    o.title, o.provider, o.country, o.degree, o.funding, o.category,
+    ...(o.benefits||[]), ...(o.eligibility||[]), ...(o.documents||[])
+  ].join(' ').toLowerCase();
+  return term.toLowerCase().split(/\s+/).filter(Boolean).every(word => haystack.includes(word));
+}
+
+function filterChip(el, key){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  activeChipFilter = key;
+  runSearch();
+}
+
+function runHeroSearch(){
+  runSearch();
+  document.getElementById('opportunities').scrollIntoView({behavior:'smooth'});
+}
+
+function runSearch(){
+  const term = document.getElementById('heroSearch').value.trim();
+  const results = opportunities.filter(o => matchesChipFilter(o, activeChipFilter) && matchesKeyword(o, term));
+  renderSearchResults(results, term);
+}
+
+function renderSearchResults(results, term){
+  const section = document.getElementById('opportunities');
+  const grid = document.getElementById('featuredGrid');
+  const head = section.querySelector('.section-head h2');
+  const label = section.querySelector('.section-label');
+
+  if(term || activeChipFilter !== 'all'){
+    label.textContent = 'Search results';
+    head.textContent = `${results.length} match${results.length===1?'':'es'}${term ? ` for "${term}"` : ''}`;
+    grid.innerHTML = results.length
+      ? results.map(cardHTML).join('')
+      : `<p style="color:var(--ink-soft); grid-column:1/-1;">No opportunities match that search. Try different keywords or clear the filter.</p>`;
+  } else {
+    label.textContent = 'Handpicked';
+    head.textContent = 'Featured Scholarships';
+    grid.innerHTML = opportunities.slice(0,3).map(cardHTML).join('');
+  }
+}
+
+/* ============ PAGE NAVIGATION ============ */
+
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+  const target = document.getElementById(`page-${name}`);
+  if(target) target.style.display = '';
+  currentPage = name;
+
+  document.querySelectorAll('.nav-links a').forEach(a => a.style.color = '');
+  const activeLink = document.getElementById(`nav${name.charAt(0).toUpperCase()}${name.slice(1)}`);
+  if(activeLink) activeLink.style.color = 'var(--blue)';
+
+  window.scrollTo({top:0, behavior:'auto'});
+
+  if(name === 'scholarships') refreshScholarshipsPage();
+}
+
+function goToScholarshipsFiltered(categoryOrCountry){
+  showPage('scholarships');
+  // try matching against country first, fall back to keyword search
+  const countrySelect = document.getElementById('spCountry');
+  const matchOption = Array.from(countrySelect.options).find(o => o.value === categoryOrCountry);
+  if(matchOption){
+    countrySelect.value = categoryOrCountry;
+  } else {
+    document.getElementById('spSearch').value = categoryOrCountry;
+  }
+  applyScholarshipFilters();
+}
+
+/* ============ SCHOLARSHIPS PAGE: filters + pagination ============ */
+const SP_PAGE_SIZE = 6;
+let spCurrentPage = 1;
+
+function populateScholarshipFilterOptions(){
+  const countrySelect = document.getElementById('spCountry');
+  const currentVal = countrySelect.value;
+  const countries = Array.from(new Set(opportunities.map(o => o.country))).sort();
+  countrySelect.innerHTML = `<option value="">All countries</option>` +
+    countries.map(c => `<option value="${c}">${c}</option>`).join('');
+  if(countries.includes(currentVal)) countrySelect.value = currentVal;
+}
+
+function matchesDegreeFilter(o, key){
+  if(!key) return true;
+  const d = o.degree.toLowerCase();
+  if(key === 'undergrad') return d.includes('undergrad');
+  if(key === 'master') return d.includes('master');
+  if(key === 'phd') return d.includes('phd');
+  return true;
+}
+
+function applyScholarshipFilters(){
+  spCurrentPage = 1;
+  refreshScholarshipsPage();
+}
+
+function clearScholarshipFilters(){
+  document.getElementById('spSearch').value = '';
+  document.getElementById('spCountry').value = '';
+  document.getElementById('spDegree').value = '';
+  document.getElementById('spFunding').value = '';
+  spCurrentPage = 1;
+  refreshScholarshipsPage();
+}
+
+function getFilteredScholarships(){
+  const term = document.getElementById('spSearch').value.trim();
+  const country = document.getElementById('spCountry').value;
+  const degree = document.getElementById('spDegree').value;
+  const funding = document.getElementById('spFunding').value;
+
+  return opportunities.filter(o => {
+    if(country && o.country !== country) return false;
+    if(funding && o.funding !== funding) return false;
+    if(!matchesDegreeFilter(o, degree)) return false;
+    if(!matchesKeyword(o, term)) return false;
+    return true;
+  });
+}
+
+function refreshScholarshipsPage(){
+  populateScholarshipFilterOptions();
+  const results = getFilteredScholarships();
+  const countEl = document.getElementById('spResultCount');
+  const grid = document.getElementById('spGrid');
+  const pagination = document.getElementById('spPagination');
+
+  const totalPages = Math.max(1, Math.ceil(results.length / SP_PAGE_SIZE));
+  if(spCurrentPage > totalPages) spCurrentPage = totalPages;
+  const start = (spCurrentPage - 1) * SP_PAGE_SIZE;
+  const pageItems = results.slice(start, start + SP_PAGE_SIZE);
+
+  countEl.textContent = `${results.length} scholarship${results.length===1?'':'s'} found`;
+  grid.innerHTML = pageItems.length
+    ? pageItems.map(cardHTML).join('')
+    : `<p style="color:var(--ink-soft); grid-column:1/-1;">No scholarships match these filters. Try clearing one.</p>`;
+
+  if(totalPages <= 1){
+    pagination.innerHTML = '';
+  } else {
+    let html = '';
+    for(let i=1; i<=totalPages; i++){
+      html += `<button class="btn ${i===spCurrentPage ? 'btn-primary' : 'btn-ghost'}" style="padding:8px 14px;" onclick="goToScholarshipPage(${i})">${i}</button>`;
+    }
+    pagination.innerHTML = html;
+  }
+}
+
+function goToScholarshipPage(n){
+  spCurrentPage = n;
+  refreshScholarshipsPage();
+  document.getElementById('page-scholarships').scrollIntoView({behavior:'smooth'});
+}
+
+function openAddOpportunityForm(){
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-head">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h2 class="display" style="font-size:1.4rem; font-weight:600;">Add opportunity</h2>
+      <div class="card-provider" style="padding-right:0; margin-top:4px;">Writes directly to your Firestore <span class="mono">scholarships</span> collection</div>
+    </div>
+    <div class="modal-body">
+      <div id="addOppError" style="display:none; background:color-mix(in srgb, var(--red) 10%, transparent); border:1px solid var(--red); color:var(--red); border-radius:8px; padding:10px 12px; font-size:.84rem; margin-bottom:14px;"></div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <input id="aoTitle" placeholder="Title *" style="width:100%; padding:9px 12px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--ink); font-family:inherit; font-size:.9rem;">
+        <input id="aoProvider" placeholder="Provider / University" style="width:100%; padding:9px 12px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--ink); font-family:inherit; font-size:.9rem;">
+        <div style="display:flex; gap:10px;">
+          <input id="aoCountry" placeholder="Country" style="flex:1; padding:9px 12px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--ink); font-family:inherit; font-size:.9rem;">
+          <input id="aoDegree" placeholder="Degree level" style="flex:1; padding:9px 12px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--ink); font-family:inherit; font-size:.9rem;">
+        </div>
+        <div style="display:flex; gap:10px;">
+          <input id="aoFunding" placeholder="Funding type" style="flex:1; padding:9px 12px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--ink); font-family:inherit; font-size:.9rem;">
+          <input id="aoDeadline" type="date" style="flex:1; padding:9px 12px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--ink); font-family:inherit; font-size:.9rem;">
+        </div>
+        <textarea id="aoSummary" placeholder="Description" rows="4" style="width:100%; padding:9px 12px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--ink); font-family:inherit; font-size:.9rem; resize:vertical;"></textarea>
+        <input id="aoApply" placeholder="Official application URL *" style="width:100%; padding:9px 12px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--ink); font-family:inherit; font-size:.9rem;">
+        <button class="btn btn-primary" id="aoSubmitBtn" style="justify-content:center; padding:11px;" onclick="submitAddOpportunity()">Save opportunity</button>
+      </div>
+    </div>`;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+async function submitAddOpportunity(){
+  const title = document.getElementById('aoTitle').value.trim();
+  const apply = document.getElementById('aoApply').value.trim();
+  const errEl = document.getElementById('addOppError');
+  errEl.style.display = 'none';
+
+  if(!title || !apply){
+    errEl.textContent = 'Title and an official application URL are required.';
+    errEl.style.display = 'block';
+    return;
+  }
+  if(!window.__nexscholarAddOpportunity){
+    errEl.textContent = 'Still connecting to Firebase — wait a moment and try again.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  const deadlineVal = document.getElementById('aoDeadline').value;
+  const data = {
+    title,
+    provider: document.getElementById('aoProvider').value.trim() || 'Not specified',
+    country: document.getElementById('aoCountry').value.trim() || 'Not specified',
+    degree: document.getElementById('aoDegree').value.trim() || 'Not specified',
+    funding: document.getElementById('aoFunding').value.trim() || 'Not specified',
+    category: 'Scholarships',
+    status: deadlineVal ? (daysUntil(deadlineVal) < 0 ? 'expired' : (daysUntil(deadlineVal) <= 14 ? 'deadline' : 'pending')) : 'pending',
+    deadline: deadlineVal || '2099-12-31',
+    updated: new Date().toISOString().slice(0,10),
+    benefits: [], eligibility: [], documents: [],
+    process: 'See full details below.',
+    website: apply, apply,
+    tips: '',
+    summary: document.getElementById('aoSummary').value.trim() || 'No description provided.',
+    image: null
+  };
+
+  const btn = document.getElementById('aoSubmitBtn');
+  btn.textContent = 'Saving…';
+  const result = await window.__nexscholarAddOpportunity(data);
+  if(result && result.error){
+    errEl.textContent = result.error;
+    errEl.style.display = 'block';
+    btn.textContent = 'Save opportunity';
+    return;
+  }
+
+  opportunities.push({ id: result.id, ...data });
+  render();
+  closeModal();
+  showToast('Opportunity added');
+}
+
+/* ============ AUTH MODAL (UI only — Firebase logic in module script below) ============ */
+let authMode = 'signin';
+
+function openAuthModal(mode){
+  authMode = mode;
+  updateAuthModalUI();
+  document.getElementById('authError').style.display = 'none';
+  document.getElementById('authOverlay').classList.add('open');
+}
+function closeAuthModal(){
+  document.getElementById('authOverlay').classList.remove('open');
+}
+function switchAuthMode(){
+  authMode = authMode === 'signin' ? 'signup' : 'signin';
+  updateAuthModalUI();
+}
+function updateAuthModalUI(){
+  const isSignIn = authMode === 'signin';
+  document.getElementById('authTitle').textContent = isSignIn ? 'Sign in' : 'Create account';
+  document.getElementById('authSubtitle').textContent = isSignIn ? 'Welcome back to NexScholar' : 'Start tracking scholarships that fit you';
+  document.getElementById('authSubmitBtn').textContent = isSignIn ? 'Sign in' : 'Create account';
+  document.getElementById('authSwitchPrompt').textContent = isSignIn ? "Don't have an account?" : 'Already have an account?';
+  document.getElementById('authSwitchLink').textContent = isSignIn ? 'Sign up' : 'Sign in';
+}
+function showAuthError(msg){
+  const el = document.getElementById('authError');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+// submitAuthForm() and signInWithGoogle() are defined in the Firebase module script below,
+// attached to window so they're callable from these inline onclick handlers.
+
+/* ============ INIT THEME FROM SYSTEM PREF ============ */
+if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+  document.documentElement.setAttribute('data-theme','dark');
+  document.getElementById('themeBtn').textContent = '☀️';
+}
+</script>
+
+<!-- ================= FIREBASE (Auth + Firestore) ================= -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js";
+  import {
+    getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
+    signInWithPopup, GoogleAuthProvider, signOut
+  } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+  import {
+    getFirestore, doc, setDoc, getDoc, getDocs, collection, serverTimestamp,
+    query, where, addDoc
+  } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAeFtrSgqvdY6QO7m3_eI9jSaMTAFd5SxM",
+    authDomain: "nexscholar-74f97.firebaseapp.com",
+    projectId: "nexscholar-74f97",
+    storageBucket: "nexscholar-74f97.firebasestorage.app",
+    messagingSenderId: "292089044416",
+    appId: "1:292089044416:web:d1cc1b77b1b16be4ddbc25",
+    measurementId: "G-9DP5T3DG89"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  let analytics;
+  try { analytics = getAnalytics(app); } catch(e) { /* analytics can fail in some sandboxed/dev contexts — non-fatal */ }
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const googleProvider = new GoogleAuthProvider();
+
+  window.__nexscholar = { app, auth, db };
+
+  /* ---------- Auth state → nav UI ---------- */
+  onAuthStateChanged(auth, async (user) => {
+    const authArea = document.getElementById('authArea');
+    if (user) {
+      authArea.innerHTML = `
+        <span style="font-size:.85rem; font-weight:600; color:var(--ink-soft); max-width:140px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+          ${user.displayName || user.email}
+        </span>
+        <button class="btn btn-ghost" onclick="window.__nexscholarSignOut()">Sign out</button>
+      `;
+      // Ensure a users/{uid} profile doc exists (created on first sign-in)
+      try {
+        const userRef = doc(db, 'users', user.uid);
+        const snap = await getDoc(userRef);
+        if (!snap.exists()) {
+          await setDoc(userRef, {
+            email: user.email || null,
+            displayName: user.displayName || null,
+            createdAt: serverTimestamp(),
+            country: null,
+            degree: null,
+            course: null,
+            preferredDestination: null,
+            educationLevel: null
+          });
+        }
+      } catch (e) {
+        console.error('Failed to create/read user profile doc:', e);
+      }
+    } else {
+      authArea.innerHTML = `
+        <button class="btn btn-ghost" id="signInBtn" onclick="openAuthModal('signin')">Sign in</button>
+        <button class="btn btn-primary" id="getStartedBtn" onclick="openAuthModal('signup')">Get started</button>
+      `;
+    }
+  });
+
+  window.__nexscholarSignOut = async () => {
+    try {
+      await signOut(auth);
+      showToast('Signed out');
+    } catch (e) {
+      showToast('Sign out failed — check console');
+      console.error(e);
+    }
+  };
+
+  /* ---------- Auth modal submit handlers ---------- */
+  window.submitAuthForm = async () => {
+    const email = document.getElementById('authEmail').value.trim();
+    const password = document.getElementById('authPassword').value;
+    if (!email || !password) {
+      showAuthError('Enter both an email and a password.');
+      return;
+    }
+    const btn = document.getElementById('authSubmitBtn');
+    const originalText = btn.textContent;
+    btn.textContent = 'Please wait…';
+    try {
+      if (authMode === 'signin') {
+        await signInWithEmailAndPassword(auth, email, password);
+      } else {
+        await createUserWithEmailAndPassword(auth, email, password);
+      }
+      closeAuthModal();
+      showToast(authMode === 'signin' ? 'Signed in' : 'Account created');
+      document.getElementById('authEmail').value = '';
+      document.getElementById('authPassword').value = '';
+    } catch (e) {
+      showAuthError(friendlyAuthError(e.code));
+    } finally {
+      btn.textContent = originalText;
+    }
+  };
+
+  window.signInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      closeAuthModal();
+      showToast('Signed in with Google');
+    } catch (e) {
+      showAuthError(friendlyAuthError(e.code));
+    }
+  };
+
+  function friendlyAuthError(code) {
+    const map = {
+      'auth/invalid-email': 'That email address looks invalid.',
+      'auth/user-not-found': 'No account found with that email.',
+      'auth/wrong-password': 'Incorrect password.',
+      'auth/invalid-credential': 'Incorrect email or password.',
+      'auth/email-already-in-use': 'An account already exists with that email.',
+      'auth/weak-password': 'Password should be at least 6 characters.',
+      'auth/popup-closed-by-user': 'Sign-in popup was closed before completing.',
+      'auth/network-request-failed': 'Network error — check your connection.'
+    };
+    return map[code] || 'Something went wrong. Please try again.';
+  }
+
+  /* ---------- Firestore: load real scholarships if present, else keep mock data ---------- */
+  window.__nexscholarLoadOpportunities = async () => {
+    try {
+      const snap = await getDocs(collection(db, 'scholarships'));
+      if (snap.empty) {
+        console.info('Firestore "scholarships" collection is empty. Add opportunities via the Admin dashboard, or publish posts on Blogger.');
+        return null;
+      }
+      const docs = [];
+      snap.forEach(d => docs.push({ id: d.id, ...d.data() }));
+      return docs;
+    } catch (e) {
+      console.error('Failed to load scholarships from Firestore:', e);
+      return null;
+    }
+  };
+
+  /* ---------- Firestore: add a single opportunity (admin action) ---------- */
+  window.__nexscholarAddOpportunity = async (data) => {
+    if (!auth.currentUser) {
+      return { error: 'Not signed in — sign in first, then try again.' };
+    }
+    try {
+      const docRef = await addDoc(collection(db, 'scholarships'), {
+        ...data,
+        addedAt: serverTimestamp()
+      });
+      return { id: docRef.id };
+    } catch (e) {
+      console.error('Add opportunity failed:', e);
+      return { error: `Save failed: ${e.code || e.message}` };
+    }
+  };
+
+  /* ---------- Firestore: bookmarks ---------- */
+  window.__nexscholarToggleBookmark = async (opportunityId, isSaved) => {
+    if (!auth.currentUser) {
+      showToast('Sign in to save bookmarks');
+      return false;
+    }
+    try {
+      const bookmarkId = `${auth.currentUser.uid}_${opportunityId}`;
+      const ref = doc(db, 'bookmarks', bookmarkId);
+      if (isSaved) {
+        await setDoc(ref, {
+          userId: auth.currentUser.uid,
+          opportunityId: String(opportunityId),
+          savedAt: serverTimestamp()
+        });
+      } else {
+        await setDoc(ref, { userId: auth.currentUser.uid, opportunityId: String(opportunityId), savedAt: null, removed: true });
+      }
+      return true;
+    } catch (e) {
+      console.error('Bookmark write failed:', e);
+      return false;
+    }
+  };
+</script>
+</body>
+</html>
